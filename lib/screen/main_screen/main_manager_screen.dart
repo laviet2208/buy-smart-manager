@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:lyshoppingmanager/screen/manager_screen/ads_manager/ads_manager_main.dart';
+import 'package:lyshoppingmanager/screen/manager_screen/notice_manager/notice_manager_main.dart';
+import 'package:lyshoppingmanager/screen/manager_screen/ui_manager/ui_directory_manager/ui_directory_manager.dart';
 import '../../data/finalData.dart';
 import '../manager_screen/product_manager/product_directory/product_directory_main.dart';
 import '../manager_screen/product_manager/product_list/product_list_main.dart';
 import '../manager_screen/product_manager/product_type/product_type_main_manager.dart';
+import '../manager_screen/ui_manager/ui_product_type_manager/ui_product_type_manager.dart';
 import 'feature_type_1.dart';
 
 class main_manager_screen extends StatefulWidget {
@@ -33,7 +36,7 @@ class _main_manager_screenState extends State<main_manager_screen> {
     }
 
     if (init == 5) {
-
+      return notice_manager_main();
     }
 
     if (init == 6) {
@@ -65,7 +68,7 @@ class _main_manager_screenState extends State<main_manager_screen> {
     }
 
     if (init == 13) {
-
+      return ui_directory_manager();
     }
 
     if (init == 14) {
@@ -77,7 +80,7 @@ class _main_manager_screenState extends State<main_manager_screen> {
     }
 
     if (init == 16) {
-
+      return ui_product_type_manager();
     }
 
     if (init == 17) {
@@ -403,19 +406,10 @@ class _main_manager_screenState extends State<main_manager_screen> {
                                 ),
 
                                 GestureDetector(
-                                  child: feature_type_1(selectButton: finalData.selectButton, title: 'Phân loại hiển thị loại 1', thisIndex: 16,),
+                                  child: feature_type_1(selectButton: finalData.selectButton, title: 'Hiển thị phân loại sp', thisIndex: 16,),
                                   onTap: () {
                                     setState(() {
                                       finalData.selectButton = 16;
-                                    });
-                                  },
-                                ),
-
-                                GestureDetector(
-                                  child: feature_type_1(selectButton: finalData.selectButton, title: 'Phân loại hiển thị loại 2', thisIndex: 17,),
-                                  onTap: () {
-                                    setState(() {
-                                      finalData.selectButton = 17;
                                     });
                                   },
                                 ),

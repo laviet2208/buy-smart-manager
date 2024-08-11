@@ -8,7 +8,7 @@ import '../add_new_product/controller.dart';
 
 class change_product_type extends StatefulWidget {
   final Product product;
-  const change_product_type({super.key, required this.product});
+  const change_product_type({super.key, required this.product,});
 
   @override
   State<change_product_type> createState() => _change_product_typeState();
