@@ -1,30 +1,30 @@
+import 'dart:convert';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:lyshoppingmanager/screen/manager_screen/customer_manager/ingredient/customer_search/customer_search.dart';
 
 import '../../../general_ingredient/heading_title.dart';
-import 'ingredient/item_customer.dart';
+import 'ingredient/item_order.dart';
 
-class customer_manager extends StatefulWidget {
-  const customer_manager({super.key});
+class order_manager_main extends StatefulWidget {
+  const order_manager_main({super.key});
 
   @override
-  State<customer_manager> createState() => _customer_managerState();
+  State<order_manager_main> createState() => _order_manager_mainState();
 }
 
-class _customer_managerState extends State<customer_manager> {
+class _order_manager_mainState extends State<order_manager_main> {
   List<String> keyList = [];
 
   void getData() {
     final reference = FirebaseDatabase.instance.ref();
-    reference.child("Account").onChildAdded.listen((event) {
+    reference.child("Order").onChildAdded.listen((event) {
       final dynamic key = event.snapshot.key;
       if (key != null && !keyList.contains(key)) {
         keyList.add(key.toString());
         setState(() {});
       }
     });
-    reference.child("Account").onChildRemoved.listen((event) {
+    reference.child("Order").onChildRemoved.listen((event) {
       final dynamic key = event.snapshot.key;
       if (key != null && keyList.contains(key)) {
         keyList.remove(key);
@@ -65,7 +65,7 @@ class _customer_managerState extends State<customer_manager> {
                 ),
                 child: Center(
                   child: Text(
-                    'Tìm kiếm khách hàng',
+                    '+ Tạo thủ công',
                     style: TextStyle(
                         fontFamily: 'muli',
                         color: Colors.black,
@@ -76,25 +76,31 @@ class _customer_managerState extends State<customer_manager> {
                 ),
               ),
               onTap: () {
-                showDialog(
-                  context: context,
-                  builder: (context) {
-                    return customer_search();
-                  },
-                );
+
               },
             ),
           ),
 
           Positioned(
-            top: 70,
+            top: 50,
             left: 0,
             right: 0,
-            child: heading_title(numberColumn: 4, listTitle: ['Thông tin tài khoản','Thông tin khách hàng','Trạng thái','Thao tác'], width: width, height: 50,),
+            child: Container(
+              width: width - 20,
+              height: 50,
+              decoration: BoxDecoration(
+                  color: Color.fromARGB(255, 247, 250, 255),
+                  border: Border.all(
+                      width: 1,
+                      color: Color.fromARGB(255, 225, 225, 226)
+                  )
+              ),
+              child: heading_title(numberColumn: 5, listTitle: ['Thông tin khách hàng', 'Thông tin đơn', 'Giá trị', 'Trạng thái', 'Thao tác'], width: width, height: 50),
+            ),
           ),
 
           Positioned(
-            top: 120,
+            top: 100,
             left: 0,
             right: 0,
             bottom: 10,
@@ -106,7 +112,7 @@ class _customer_managerState extends State<customer_manager> {
                 itemCount: keyList.length,
                 padding: EdgeInsets.zero,
                 itemBuilder: (context, index) {
-                  return item_customer(id: keyList.reversed.toList()[index], index: index);
+                  return item_order(id: keyList[index], index: index);
                 },
               ),
             ),

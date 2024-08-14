@@ -3,6 +3,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:lyshoppingmanager/screen/manager_screen/ads_manager/ads_manager_main.dart';
 import 'package:lyshoppingmanager/screen/manager_screen/customer_manager/customer_manager.dart';
 import 'package:lyshoppingmanager/screen/manager_screen/notice_manager/notice_manager_main.dart';
+import 'package:lyshoppingmanager/screen/manager_screen/order_manager/order_manager_main.dart';
 import 'package:lyshoppingmanager/screen/manager_screen/ui_manager/ui_directory_manager/ui_directory_manager.dart';
 import 'package:lyshoppingmanager/screen/manager_screen/voucher_manager/voucher_manager_main.dart';
 import '../../data/finalData.dart';
@@ -46,7 +47,7 @@ class _main_manager_screenState extends State<main_manager_screen> {
     }
 
     if (init == 7) {
-
+      return order_manager_main();
     }
 
     if (init == 8) {

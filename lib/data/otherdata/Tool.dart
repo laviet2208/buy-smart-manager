@@ -1,4 +1,7 @@
 import 'dart:math';
+import '../cartData/CartData.dart';
+import '../orderData/Order.dart';
+import '../voucherData/Voucher.dart';
 import 'Time.dart';
 
 Time getCurrentTime() {
@@ -13,6 +16,31 @@ Time getCurrentTime() {
   currentTime.year = now.year;
 
   return currentTime;
+}
+
+double calculatetotalMoney(Order order) {
+  double cost = 0;
+  for (Cartdata cartdata in order.productList) {
+    cost = cost + cartdata.product.cost * cartdata.number;
+  }
+  return cost;
+}
+
+double getVoucherSale(Voucher voucher, double cost) {
+  double money = 0;
+
+  if(voucher.Money < 100) {
+    double mn = cost * voucher.Money/100;
+    if (mn <= voucher.maxSale) {
+      money = mn;
+    } else {
+      money = voucher.maxSale;
+    }
+  } else {
+    money = voucher.Money;
+  }
+
+  return money;
 }
 
 int calculateDiscountPercentage(double originalPrice, double discountedPrice) {
