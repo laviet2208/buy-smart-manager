@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:lyshoppingmanager/screen/manager_screen/ads_manager/ads_manager_main.dart';
 import 'package:lyshoppingmanager/screen/manager_screen/customer_manager/customer_manager.dart';
+import 'package:lyshoppingmanager/screen/manager_screen/money_request_manager/money_request_manager.dart';
 import 'package:lyshoppingmanager/screen/manager_screen/notice_manager/notice_manager_main.dart';
 import 'package:lyshoppingmanager/screen/manager_screen/order_manager/order_manager_main.dart';
 import 'package:lyshoppingmanager/screen/manager_screen/ui_manager/ui_directory_manager/ui_directory_manager.dart';
@@ -51,7 +52,7 @@ class _main_manager_screenState extends State<main_manager_screen> {
     }
 
     if (init == 8) {
-
+      return money_request_manager();
     }
 
     if (init == 9) {
@@ -320,6 +321,15 @@ class _main_manager_screenState extends State<main_manager_screen> {
                                   onTap: () {
                                     setState(() {
                                       finalData.selectButton = 9;
+                                    });
+                                  },
+                                ),
+
+                                GestureDetector(
+                                  child: feature_type_1(selectButton: finalData.selectButton, title: 'Yêu cầu giao dịch', thisIndex: 8,),
+                                  onTap: () {
+                                    setState(() {
+                                      finalData.selectButton = 8;
                                     });
                                   },
                                 ),
