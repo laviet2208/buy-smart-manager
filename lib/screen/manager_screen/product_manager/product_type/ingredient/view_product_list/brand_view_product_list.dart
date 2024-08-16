@@ -1,11 +1,14 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:lyshoppingmanager/data/product/ProductType.dart';
+import 'package:lyshoppingmanager/screen/manager_screen/product_manager/product_type/ingredient/view_product_list/add_product_in_type.dart';
 import '../../../../../../general_ingredient/heading_title.dart';
 import '../item/product_in_type_item.dart';
 
 class type_view_product_list extends StatefulWidget {
   final String id;
-  const type_view_product_list({super.key, required this.id});
+  final ProductType productType;
+  const type_view_product_list({super.key, required this.id, required this.productType});
 
   @override
   State<type_view_product_list> createState() => _type_view_product_listState();
@@ -49,6 +52,40 @@ class _type_view_product_listState extends State<type_view_product_list> {
       child: Stack(
         children: <Widget>[
           Positioned(
+            top: 0,
+            left: 0,
+            child: GestureDetector(
+              child: Container(
+                height: 40,
+                width: 180,
+                decoration: BoxDecoration(
+                    color: Colors.yellow,
+                    border: Border.all()
+                ),
+                child: Center(
+                  child: Text(
+                    '+ Thêm sản phẩm',
+                    style: TextStyle(
+                        fontFamily: 'muli',
+                        color: Colors.black,
+                        fontSize: 13,
+                        fontWeight: FontWeight.bold
+                    ),
+                  ),
+                ),
+              ),
+              onTap: () {
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return add_product_in_type(productType: widget.productType);
+                  },
+                );
+              },
+            ),
+          ),
+
+          Positioned(
             top: 55,
             left: 0,
             right: 0,
@@ -68,7 +105,7 @@ class _type_view_product_listState extends State<type_view_product_list> {
                 itemCount: productId.length,
                 padding: EdgeInsets.zero,
                 itemBuilder: (context, index) {
-                  return product_in_type_item(id: productId[index], index: index);
+                  return product_in_type_item(id: productId[index], index: index, productType: widget.productType,);
                 },
               ),
             ),

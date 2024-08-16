@@ -142,7 +142,7 @@ class _product_type_itemState extends State<product_type_item> {
                             contentPadding: EdgeInsets.all(10),
                             clipBehavior: Clip.antiAliasWithSaveLayer,
                             title: Text('Danh sách sản phẩm trong ' + widget.type.name),
-                            content: type_view_product_list(id: widget.type.id),
+                            content: type_view_product_list(id: widget.type.id, productType: widget.type,),
                           );
                         },
                       );

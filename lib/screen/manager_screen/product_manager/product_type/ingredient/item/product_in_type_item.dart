@@ -1,15 +1,18 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:lyshoppingmanager/data/product/ProductType.dart';
 import '../../../../../../data/otherdata/Time.dart';
 import '../../../../../../data/otherdata/Tool.dart';
 import '../../../../../../data/product/Product.dart';
 import '../../../../../../general_ingredient/text_line_in_item.dart';
 import '../../../product_list/action/change_product_type/change_product_type.dart';
+import '../../../product_list/controller.dart';
 
 class product_in_type_item extends StatefulWidget {
   final String id;
   final int index;
-  const product_in_type_item({super.key, required this.id, required this.index});
+  final ProductType productType;
+  const product_in_type_item({super.key, required this.id, required this.index, required this.productType});
 
   @override
   State<product_in_type_item> createState() => _product_in_type_itemState();
@@ -210,7 +213,7 @@ class _product_in_type_itemState extends State<product_in_type_item> {
               padding: EdgeInsets.only(left: 10, right: 10),
               child: ListView(
                 children: [
-                  Container(height: 4,),
+                  Container(height: 8,),
 
                   Padding(
                     padding: EdgeInsets.only(left: 10, right: 10),
@@ -247,6 +250,98 @@ class _product_in_type_itemState extends State<product_in_type_item> {
                             );
                           },
                         );
+                      },
+                    ),
+                  ),
+
+                  Container(height: 8,),
+
+                  Padding(
+                    padding: EdgeInsets.only(left: 10, right: 10),
+                    child: GestureDetector(
+                      child: Container(
+                        height: 30,
+                        decoration: BoxDecoration(
+                          color: Colors.redAccent,
+                          border: Border.all(
+                              width: 1,
+                              color: Colors.black
+                          ),
+                        ),
+                        child: Center(
+                          child: Text(
+                            'Xóa sản phẩm',
+                            style: TextStyle(
+                              color: Colors.black,
+                            ),
+                          ),
+                        ),
+                      ),
+                      onTap: () {
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: Text('Xóa vĩnh viễn'),
+                              content: Text('Bạn có xác nhận xóa vĩnh viễn không'),
+                              actions: <Widget>[
+                                TextButton(
+                                  child: Text('Quay lại', style: TextStyle(color: Colors.red),),
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                ),
+                                TextButton(
+                                  child: Text('Xác nhận xóa'),
+                                  onPressed: () async {
+                                    widget.productType.productList.removeAt(widget.index);
+                                    DatabaseReference databaseRef = FirebaseDatabase.instance.ref();
+                                    await databaseRef.child('productList').child(widget.id).remove();
+                                    databaseRef = FirebaseDatabase.instance.ref();
+                                    await databaseRef.child('productType').child(widget.productType.id).set(widget.productType.toJson());
+                                    Navigator.of(context).pop();
+                                    Navigator.of(context).pop();
+                                  },
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                      },
+                    ),
+                  ),
+
+                  Container(height: 8,),
+
+                  Padding(
+                    padding: EdgeInsets.only(left: 10, right: 10),
+                    child: GestureDetector(
+                      child: Container(
+                        height: 30,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          border: Border.all(
+                              width: 1,
+                              color: Colors.black
+                          ),
+                        ),
+                        child: Center(
+                          child: Text(
+                            product.showStatus == 0 ? 'Hiện sản phẩm' : 'Ẩn sản phẩm',
+                            style: TextStyle(
+                              color: Colors.black,
+                            ),
+                          ),
+                        ),
+                      ),
+                      onTap: () async {
+                        if (product.showStatus == 0) {
+                          product.showStatus = 1;
+                          await product_manager_controller.change_productShowStatus(product);
+                        } else {
+                          product.showStatus = 0;
+                          await product_manager_controller.change_productShowStatus(product);
+                        }
                       },
                     ),
                   ),
