@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:lyshoppingmanager/screen/manager_screen/notice_manager/actions/delete_notice.dart';
+import 'package:lyshoppingmanager/screen/manager_screen/notice_manager/actions/edit_notice.dart';
+import 'package:lyshoppingmanager/screen/manager_screen/notice_manager/actions/start_stop_notice.dart';
 
 import '../../../../data/noticeData/noticeData.dart';
 import '../../../../data/otherdata/Tool.dart';
@@ -161,7 +164,9 @@ class _item_noticeState extends State<item_notice> {
                       ),
                     ),
                     onTap: () {
-
+                      showDialog(context: context, builder: (context) {
+                        return edit_notice(data: widget.notice);
+                      });
                     },
                   ),
 
@@ -188,7 +193,9 @@ class _item_noticeState extends State<item_notice> {
                       ),
                     ),
                     onTap: () {
-
+                      showDialog(context: context, builder: (context) {
+                        return delete_notice(data: widget.notice);
+                      });
                     },
                   ),
 
@@ -210,6 +217,11 @@ class _item_noticeState extends State<item_notice> {
                         ),
                       ),
                     ),
+                    onTap: () {
+                      showDialog(context: context, builder: (context) {
+                        return start_stop_notice(data: widget.notice);
+                      });
+                    },
                   ),
 
                   Container(height: 5,),

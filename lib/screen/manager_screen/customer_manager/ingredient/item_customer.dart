@@ -1,5 +1,8 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:lyshoppingmanager/data/chatData/messenger.dart';
+import 'package:lyshoppingmanager/screen/manager_screen/customer_manager/ingredient/chat_manager/chat_room/ingredient/Item_messenger.dart';
+import 'package:lyshoppingmanager/screen/manager_screen/customer_manager/ingredient/delete_customer/delete_account.dart';
 
 import '../../../../data/Account/Account.dart';
 import '../../../../data/otherdata/Time.dart';
@@ -21,7 +24,7 @@ class item_customer extends StatefulWidget {
 
 class _item_customerState extends State<item_customer> {
   Account account = Account(id: '', username: '', password: '', address: '', createTime: Time(second: 0, minute: 0, hour: 0, day: 0, month: 0, year: 0), money: 0, firstName: '', lastName: '', phoneNum: '', lockstatus: 0, voucherList: []);
-
+  bool haveMes = false;
   void get_account() {
     if (widget.id != '') {
       final reference = FirebaseDatabase.instance.ref();
@@ -36,11 +39,44 @@ class _item_customerState extends State<item_customer> {
     }
   }
 
+  void get_mes() {
+    if (widget.id != '') {
+      final reference = FirebaseDatabase.instance.ref();
+      reference.child("Chatrooms").child(widget.id).child('messengerList').limitToLast(1).onValue.listen((event) {
+        final dynamic data = event.snapshot.value;
+        if (data != null) {
+          for (final result in data) {
+            messenger mes = messenger.fromJson(result);
+            print('Nội dung : ' + mes.content);
+            if (mes.type == 1) {
+              haveMes = true;
+              setState(() {
+
+              });
+            } else {
+              haveMes = false;
+              setState(() {
+
+              });
+            }
+          }
+
+        } else {
+          haveMes = false;
+          setState(() {
+
+          });
+        }
+      });
+    }
+  }
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     get_account();
+    get_mes();
   }
 
   @override
@@ -294,7 +330,7 @@ class _item_customerState extends State<item_customer> {
                       child: Container(
                         height: 30,
                         decoration: BoxDecoration(
-                          color: Colors.black,
+                          color: haveMes ? Colors.red : Colors.black,
                           border: Border.all(
                               width: 1,
                               color: Colors.black
@@ -331,6 +367,42 @@ class _item_customerState extends State<item_customer> {
                       },
                     ),
                   ),
+
+                  Container(height: 4,),
+
+                  Padding(
+                    padding: EdgeInsets.only(left: 10, right: 10),
+                    child: GestureDetector(
+                      child: Container(
+                        height: 30,
+                        decoration: BoxDecoration(
+                          color: Colors.redAccent,
+                          border: Border.all(
+                              width: 1,
+                              color: Colors.black
+                          ),
+                        ),
+                        child: Center(
+                          child: Text(
+                            'Xóa tài khoản',
+                            style: TextStyle(
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                      ),
+                      onTap: () {
+                        showDialog(
+                          context: context,
+                          builder: (context) {
+                            return delete_account(account: account);
+                          },
+                        );
+                      },
+                    ),
+                  ),
+
+                  Container(height: 4,),
                 ],
               ),
             ),

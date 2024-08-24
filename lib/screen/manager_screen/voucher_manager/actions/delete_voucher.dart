@@ -17,7 +17,7 @@ class _delete_voucherState extends State<delete_voucher> {
 
   Future<void> delete_voucher() async {
       DatabaseReference databaseRef = FirebaseDatabase.instance.ref();
-      await databaseRef.child('VoucherStorage').child(widget.voucher.id).remove();
+      await databaseRef.child('Voucher').child(widget.voucher.id).remove();
       setState(() {
         loading = false;
       });

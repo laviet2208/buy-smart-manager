@@ -120,7 +120,7 @@ class _main_manager_screenState extends State<main_manager_screen> {
                         child: Padding(
                           padding: EdgeInsets.only(top: 17, bottom: 17),
                           child: AutoSizeText(
-                            'Admin Dubai Mall',
+                            'Admin Buy Smart',
                             style: TextStyle(
                               fontFamily: 'muli',
                               fontSize: 100,
