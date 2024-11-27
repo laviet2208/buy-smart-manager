@@ -1,13 +1,12 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:lyshoppingmanager/data/chatData/messenger.dart';
-import 'package:lyshoppingmanager/screen/manager_screen/customer_manager/ingredient/chat_manager/chat_room/ingredient/Item_messenger.dart';
 import 'package:lyshoppingmanager/screen/manager_screen/customer_manager/ingredient/delete_customer/delete_account.dart';
-
 import '../../../../data/Account/Account.dart';
 import '../../../../data/otherdata/Time.dart';
 import '../../../../data/otherdata/Tool.dart';
 import '../../../../general_ingredient/text_line_in_item.dart';
+import '../../../../general_ingredient/utils.dart';
 import '../actions/change_account_money.dart';
 import '../actions/view_account_info.dart';
 import 'chat_manager/chat_room/chat_room.dart';
@@ -201,8 +200,22 @@ class _item_customerState extends State<item_customer> {
                   Container(height: 8,),
 
                   TextButton(
-                    onPressed: () {
+                    onPressed: () async {
+                      if (account.lockstatus == 1) {
+                        final reference = FirebaseDatabase.instance.ref();
+                        await reference.child('Account').child(account.id).child('lockstatus').set(0);
+                        toastMessage('Khóa thành công');
+                        setState(() {
 
+                        });
+                      } else {
+                        final reference = FirebaseDatabase.instance.ref();
+                        await reference.child('Account').child(account.id).child('lockstatus').set(1);
+                        toastMessage('Mở thành công');
+                        setState(() {
+
+                        });
+                      }
                     },
                     child: Container(
                       alignment: Alignment.centerLeft,
